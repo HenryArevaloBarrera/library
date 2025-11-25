@@ -1,4 +1,3 @@
-```
 package com.example.library.controllers;
 
 import com.example.library.model.Docente;
@@ -103,4 +102,4 @@ public class ProfesorController {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
     }
-}```
+}

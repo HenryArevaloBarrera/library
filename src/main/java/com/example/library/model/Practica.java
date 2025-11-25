@@ -12,9 +12,7 @@ public class Practica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
     private String actividad;
-    
     private String tipoActividad;
     
     @Temporal(TemporalType.DATE)
@@ -29,23 +27,43 @@ public class Practica {
     @Column(length = 1000)
     private String descripcion;
     
-    // Relaciones con tablas de unión
-    @OneToMany(mappedBy = "practica", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PracticaDocente> practicasDocentes = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "practica_docente",
+        joinColumns = @JoinColumn(name = "practica_id"),
+        inverseJoinColumns = @JoinColumn(name = "docente_id")
+    )
+    private List<Docente> docentes = new ArrayList<>();
     
-    @OneToMany(mappedBy = "practica", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PracticaEmpresa> practicasEmpresas = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "practica_empresa",
+        joinColumns = @JoinColumn(name = "practica_id"),
+        inverseJoinColumns = @JoinColumn(name = "empresa_id")
+    )
+    private List<Empresa> empresas = new ArrayList<>();
     
-    @OneToMany(mappedBy = "practica", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PracticaCurso> practicasCursos = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "practica_curso",
+        joinColumns = @JoinColumn(name = "practica_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private List<Curso> cursos = new ArrayList<>();
     
-    @OneToMany(mappedBy = "practica", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PracticaEstudiante> practicasEstudiantes = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "practica_estudiante",
+        joinColumns = @JoinColumn(name = "practica_id"),
+        inverseJoinColumns = @JoinColumn(name = "estudiante_id")
+    )
+    private List<Estudiante> estudiantes = new ArrayList<>();
     
-    // Constructores
-    public Practica() {}
+    public Practica() {
+    }
     
-    public Practica(String actividad, String tipoActividad, Date fechaSalida, Date fechaRegreso, String periodoAcademico, String competencia, String descripcion) {
+    public Practica(String actividad, String tipoActividad, Date fechaSalida, Date fechaRegreso, 
+                   String periodoAcademico, String competencia, String descripcion) {
         this.actividad = actividad;
         this.tipoActividad = tipoActividad;
         this.fechaSalida = fechaSalida;
@@ -55,40 +73,119 @@ public class Practica {
         this.descripcion = descripcion;
     }
     
-    // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
     
-    public String getActividad() { return actividad; }
-    public void setActividad(String actividad) { this.actividad = actividad; }
+    public void setId(Long id) {
+        this.id = id;
+    }
     
-    public String getTipoActividad() { return tipoActividad; }
-    public void setTipoActividad(String tipoActividad) { this.tipoActividad = tipoActividad; }
+    public String getActividad() {
+        return actividad;
+    }
     
-    public Date getFechaSalida() { return fechaSalida; }
-    public void setFechaSalida(Date fechaSalida) { this.fechaSalida = fechaSalida; }
+    public void setActividad(String actividad) {
+        this.actividad = actividad;
+    }
     
-    public Date getFechaRegreso() { return fechaRegreso; }
-    public void setFechaRegreso(Date fechaRegreso) { this.fechaRegreso = fechaRegreso; }
+    public String getTipoActividad() {
+        return tipoActividad;
+    }
     
-    public String getPeriodoAcademico() { return periodoAcademico; }
-    public void setPeriodoAcademico(String periodoAcademico) { this.periodoAcademico = periodoAcademico; }
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
+    }
     
-    public String getCompetencia() { return competencia; }
-    public void setCompetencia(String competencia) { this.competencia = competencia; }
+    public Date getFechaSalida() {
+        return fechaSalida;
+    }
     
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
     
-    public List<PracticaDocente> getPracticasDocentes() { return practicasDocentes; }
-    public void setPracticasDocentes(List<PracticaDocente> practicasDocentes) { this.practicasDocentes = practicasDocentes; }
+    public Date getFechaRegreso() {
+        return fechaRegreso;
+    }
     
-    public List<PracticaEmpresa> getPracticasEmpresas() { return practicasEmpresas; }
-    public void setPracticasEmpresas(List<PracticaEmpresa> practicasEmpresas) { this.practicasEmpresas = practicasEmpresas; }
+    public void setFechaRegreso(Date fechaRegreso) {
+        this.fechaRegreso = fechaRegreso;
+    }
     
-    public List<PracticaCurso> getPracticasCursos() { return practicasCursos; }
-    public void setPracticasCursos(List<PracticaCurso> practicasCursos) { this.practicasCursos = practicasCursos; }
+    public String getPeriodoAcademico() {
+        return periodoAcademico;
+    }
     
-    public List<PracticaEstudiante> getPracticasEstudiantes() { return practicasEstudiantes; }
-    public void setPracticasEstudiantes(List<PracticaEstudiante> practicasEstudiantes) { this.practicasEstudiantes = practicasEstudiantes; }
+    public void setPeriodoAcademico(String periodoAcademico) {
+        this.periodoAcademico = periodoAcademico;
+    }
+    
+    public String getCompetencia() {
+        return competencia;
+    }
+    
+    public void setCompetencia(String competencia) {
+        this.competencia = competencia;
+    }
+    
+    public String getDescripcion() {
+        return descripcion;
+    }
+    
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+    public List<Docente> getDocentes() {
+        return docentes;
+    }
+    
+    public void setDocentes(List<Docente> docentes) {
+        this.docentes = docentes;
+    }
+    
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+    
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+    
+    public List<Curso> getCursos() {
+        return cursos;
+    }
+    
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }
+    
+    public List<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+    
+    public void setEstudiantes(List<Estudiante> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
+    
+    public void agregarDocente(Docente docente) {
+        this.docentes.add(docente);
+        docente.getPracticas().add(this);
+    }
+    
+    public void agregarEmpresa(Empresa empresa) {
+        this.empresas.add(empresa);
+        empresa.getPracticas().add(this);
+    }
+    
+    public void agregarCurso(Curso curso) {
+        this.cursos.add(curso);
+        curso.getPracticas().add(this);
+    }
+    
+    public void agregarEstudiante(Estudiante estudiante) {
+        this.estudiantes.add(estudiante);
+        estudiante.getPracticas().add(this);
+    }
 }

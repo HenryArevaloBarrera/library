@@ -1,6 +1,6 @@
 package com.example.library.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +20,11 @@ public class Empresa {
     private String ciudad;
     private String representante;
     
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PracticaEmpresa> practicasEmpresas = new ArrayList<>();
+    @ManyToMany(mappedBy = "empresas")
+    private List<Practica> practicas = new ArrayList<>();
     
-    // Constructores
-    public Empresa() {}
+    public Empresa() {
+    }
     
     public Empresa(String nombre, String direccion, String telefono, String sector, String ciudad, String representante) {
         this.nombre = nombre;
@@ -35,28 +35,67 @@ public class Empresa {
         this.representante = representante;
     }
     
-    // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
     
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setId(Long id) {
+        this.id = id;
+    }
     
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public String getNombre() {
+        return nombre;
+    }
     
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     
-    public String getSector() { return sector; }
-    public void setSector(String sector) { this.sector = sector; }
+    public String getDireccion() {
+        return direccion;
+    }
     
-    public String getCiudad() { return ciudad; }
-    public void setCiudad(String ciudad) { this.ciudad = ciudad; }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
     
-    public String getRepresentante() { return representante; }
-    public void setRepresentante(String representante) { this.representante = representante; }
+    public String getTelefono() {
+        return telefono;
+    }
     
-    public List<PracticaEmpresa> getPracticasEmpresas() { return practicasEmpresas; }
-    public void setPracticasEmpresas(List<PracticaEmpresa> practicasEmpresas) { this.practicasEmpresas = practicasEmpresas; }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
+    public String getSector() {
+        return sector;
+    }
+    
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+    
+    public String getCiudad() {
+        return ciudad;
+    }
+    
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+    
+    public String getRepresentante() {
+        return representante;
+    }
+    
+    public void setRepresentante(String representante) {
+        this.representante = representante;
+    }
+    
+    public List<Practica> getPracticas() {
+        return practicas;
+    }
+    
+    public void setPracticas(List<Practica> practicas) {
+        this.practicas = practicas;
+    }
 }

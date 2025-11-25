@@ -1,6 +1,6 @@
 package com.example.library.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +16,11 @@ public class Docente {
     private String email;
     private String departamento;
     
-    @OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PracticaDocente> practicasDocentes = new ArrayList<>();
+    @ManyToMany(mappedBy = "docentes")
+    private List<Practica> practicas = new ArrayList<>();
     
-    // Constructores
-    public Docente() {}
+    public Docente() {
+    }
     
     public Docente(String identificacion, String nombre, String email, String departamento) {
         this.identificacion = identificacion;
@@ -29,19 +29,43 @@ public class Docente {
         this.departamento = departamento;
     }
     
-    // Getters y Setters
-    public String getIdentificacion() { return identificacion; }
-    public void setIdentificacion(String identificacion) { this.identificacion = identificacion; }
+    public String getIdentificacion() {
+        return identificacion;
+    }
     
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
     
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getNombre() {
+        return nombre;
+    }
     
-    public String getDepartamento() { return departamento; }
-    public void setDepartamento(String departamento) { this.departamento = departamento; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     
-    public List<PracticaDocente> getPracticasDocentes() { return practicasDocentes; }
-    public void setPracticasDocentes(List<PracticaDocente> practicasDocentes) { this.practicasDocentes = practicasDocentes; }
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public String getDepartamento() {
+        return departamento;
+    }
+    
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+    
+    public List<Practica> getPracticas() {
+        return practicas;
+    }
+    
+    public void setPracticas(List<Practica> practicas) {
+        this.practicas = practicas;
+    }
 }
